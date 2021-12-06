@@ -30,7 +30,7 @@
 
 <script>
 import ButtonCommon from '../components/Posts_components/UI/ButtonCommon.vue';
-import {ERROR_TEXT} from '@/data/constants.js'
+import { ERROR_TEXT, ACTIONS } from '@/data/constants.js';
 export default {
     components: { ButtonCommon },
 
@@ -48,56 +48,39 @@ export default {
     },
     methods: {
         calc() {
-            switch (this.operation) {
-                case '*':
-                    this.result = +this.num * +this.secNum;
-                    break;
-                case '/':
-                    if (this.secNum == 0) {
-                        this.result = ERROR_TEXT;
-                    } else {
-                        this.result = +this.num / +this.secNum;
-                    }
-                    break;
-                case '-':
-                    this.result = +this.num - +this.secNum;
-                    break;
-                case '+':
-                    this.result = +this.num + +this.secNum;
+            if (this.operation == ACTIONS.deduction && this.secNum == 0) {
+                this.result = ERROR_TEXT;
+            } else {
+                this.result = eval(+this.num + this.operation + this.secNum);
             }
-            this.makeResult();
+            this.showResult();
+            this.updateInfoAfterCalc();
         },
 
         checkAction(event) {
             this.action = event.target.textContent;
             if (
-                this.action == '+' ||
-                this.action == '-' ||
-                this.action == '*' ||
-                this.action == '/'
+                this.action == ACTIONS.plus ||
+                this.action == ACTIONS.minus ||
+                this.action == ACTIONS.multiplication ||
+                this.action == ACTIONS.deduction
             ) {
                 if (this.num.length != 0 && this.secNum.length !== 0) {
                     this.calc();
                 }
                 this.operation = this.action;
                 this.operationInput = `${this.num} ${this.operation}`;
-            } else if (this.action === '=') {
+            } else if (this.action === ACTIONS.equals) {
                 this.calc();
             } else {
-                switch (this.operation) {
-                    case null:
-                        this.num += this.action;
-                        this.inputValue = this.num;
-                        break;
-                    default:
-                        this.secNum += this.action;
-                        this.inputValue = this.secNum;
-                }
+                this.updateNumbers();
             }
         },
-        makeResult() {
+        showResult() {
             this.inputValue = this.result;
             this.operationInput = `${this.num}${this.operation}${this.secNum} = `;
+        },
+        updateInfoAfterCalc() {
             this.num = this.result;
             this.secNum = '';
         },
@@ -109,6 +92,17 @@ export default {
             this.result = null;
             this.inputValue = '';
             this.operationInput = '';
+        },
+        updateNumbers() {
+            switch (this.operation) {
+                case null:
+                    this.num += this.action;
+                    this.inputValue = this.num;
+                    break;
+                default:
+                    this.secNum += this.action;
+                    this.inputValue = this.secNum;
+            }
         },
     },
 };
