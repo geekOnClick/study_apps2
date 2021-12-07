@@ -84,6 +84,7 @@ export default {
         updateInfoAfterCalc() {
             this.num = this.result;
             this.secNum = '';
+            console.log('Git')
         },
         reset() {
             this.num = '';
