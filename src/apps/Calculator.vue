@@ -79,6 +79,7 @@ export default {
         showResult() {
             this.inputValue = this.result;
             this.operationInput = `${this.num}${this.operation}${this.secNum} = `;
+            //GIT
         },
         updateInfoAfterCalc() {
             this.num = this.result;
