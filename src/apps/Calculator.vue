@@ -32,8 +32,13 @@
 import ButtonCommon from '../components/Posts_components/UI/ButtonCommon.vue';
 import { ERROR_TEXT, ACTIONS } from '@/data/constants.js';
 export default {
+    emits: ['open1'],
     components: { ButtonCommon },
-
+    props: {
+        'openedMess': {
+            required: false,
+        },
+    },
     data() {
         return {
             num: '',
@@ -59,11 +64,14 @@ export default {
 
         checkAction(event) {
             this.action = event.target.textContent;
+            let arr = [ACTIONS.plus, ACTIONS.minus, ACTIONS.multiplication, ACTIONS.deduction]
             if (
-                this.action == ACTIONS.plus ||
-                this.action == ACTIONS.minus ||
-                this.action == ACTIONS.multiplication ||
-                this.action == ACTIONS.deduction
+                // this.action == ACTIONS.plus ||
+                // this.action == ACTIONS.minus ||
+                // this.action == ACTIONS.multiplication ||
+                // this.action == ACTIONS.deduction
+
+                arr.includes(this.action)
             ) {
                 if (this.num.length != 0 && this.secNum.length !== 0) {
                     this.calc();
@@ -79,12 +87,10 @@ export default {
         showResult() {
             this.inputValue = this.result;
             this.operationInput = `${this.num}${this.operation}${this.secNum} = `;
-            //GIT
         },
         updateInfoAfterCalc() {
             this.num = this.result;
             this.secNum = '';
-            console.log('Git')
         },
         reset() {
             this.num = '';

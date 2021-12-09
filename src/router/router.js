@@ -2,6 +2,7 @@ import Main from '@/apps/Main'
 import Calculator from '@/apps/Calculator'
 import StudyPlan from '@/apps/StudyPlan'
 import Posts from '@/apps/Posts'
+import OpenedPost from '@/apps/OpenedPost'
 import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
     {
@@ -18,7 +19,12 @@ const routes = [
     },
     {
         path: "/posts",
-        component: Posts
+        component: Posts,
+        props: true
+    },
+    {
+        path: "/openedPost",
+        component: OpenedPost
     }
 ]
 const router = createRouter({
