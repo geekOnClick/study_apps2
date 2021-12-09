@@ -1,16 +1,20 @@
 <template>
-   <input :value="modelValue" @input="updateInput" class="input" type="text">
+   <input @keyup.enter="checkInput" class="input" type="text">
 </template>
 
 <script>
 export default {
+    emits: ["checkInput"],
     name: 'input-common',
-    props: {
-        modelValue: [String, Number]
+     data(){
+        return {
+           data: null
+        }
     },
     methods: {
-        updateInput(event) {
-            this.$emit('update:modelValue', event.target.value)
+        checkInput(event) {
+            this.data = event.target.value
+            this.$emit('checkInput', this.data)
         }
     }
  

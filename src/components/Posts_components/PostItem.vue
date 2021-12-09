@@ -1,10 +1,13 @@
 <template>
         <div class="post" >
             <div>
+           <div><strong>Id</strong>: {{ post.id }}</div>
            <div><strong>Название</strong>: {{ post.title }}</div>
            <div><strong>Описание</strong>: {{ post.body }}</div>
             </div>
             <div class="post__btns">
+                <button-common @click="$emit('open1', post)">$emit-props</button-common>
+                <button-common @click="$store.commit('openNewPost', post)">$store</button-common>
                 <button-common
                 @click="$emit('remove', post)">Удалить</button-common>
             </div>
@@ -13,6 +16,7 @@
 
 <script>
 export default {
+    emits: ['remove', 'open1'],
      props: {
         post: {
             type: Object,
@@ -21,12 +25,15 @@ export default {
      },
     data(){
         return {
-           
+           postId: null,
+           selectedPost: null
         }
     },
     methods: {
-     
-    },   
+     selectPost(id){
+         this.postId = id
+     }
+    },  
 }
 </script>
 

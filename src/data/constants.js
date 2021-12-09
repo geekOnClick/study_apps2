@@ -6,6 +6,7 @@
        'multiplication': '*',
        'deduction': '/',
        'equals': '='
-   } 
+   };
+   export const URL =  'https://jsonplaceholder.typicode.com/posts?_limit=10'
 
        
