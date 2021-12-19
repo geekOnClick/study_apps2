@@ -7,7 +7,7 @@
             </div>
             <div class="post__btns">
                 <button-common @click="$emit('open1', post)">$emit-props</button-common>
-                <button-common @click="$store.commit('openNewPost', post)">$store</button-common>
+                <button-common @click="$store.commit('postStore/openNewPost', post)">$store</button-common>
                 <button-common
                 @click="$emit('remove', post)">Удалить</button-common>
             </div>
@@ -32,7 +32,7 @@ export default {
     methods: {
      selectPost(id){
          this.postId = id
-     }
+     },
     },  
 }
 </script>

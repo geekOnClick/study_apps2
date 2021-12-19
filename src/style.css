@@ -37,13 +37,22 @@ body {
     padding-top: 10px;
 }
 
+.icon {
+  width: 400px;
+}
+
+.nextRow {
+  margin-top: 80px;
+}
+
 .projects {
+    margin: 0 auto;
     margin-top: 50px;
-    min-width: 1100px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
-    /* border: 1px solid red; */
+    width: 1400px;
+    
 }
 
 .projects img {
