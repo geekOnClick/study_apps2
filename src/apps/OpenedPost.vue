@@ -29,19 +29,21 @@
 
 <script> 
 import ButtonCommon from '../components/Posts_components/UI/ButtonCommon.vue';
+// import { mapState } from 'vuex'
 export default {
   components: { ButtonCommon },
     emits: ['open1'],
     props: ['openedMess'],
     data() {
         return {
-            openedPostWithStore: this.$store.state.openedPost,
+            openedPostWithStore: this.$store.state.postStore.openedPost,
             opened: this.openedMess
         };
     },
     methods: {
         
     },
+    
 };
 </script>
 

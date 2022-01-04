@@ -1,13 +1,11 @@
+
 import { createStore } from "vuex"
+import postStore from "./module/postStore"
+import freelanceStore from "./module/freelanceStore"
 
 export default createStore({
-    state: {
-        openedPost: null,
-
-    },
-    mutations: {
-        openNewPost(state, post){
-            state.openedPost = post
-        }
+    modules: {
+        postStore,
+        freelanceStore
     }
 })
