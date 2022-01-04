@@ -7,6 +7,7 @@
 
 <script>
 import TheNavbar from '@/components/Freelance_components/components/TheNavbar'
+import { mapActions } from 'vuex'
 export default {
     emits: ['open1'],
     props: {
@@ -16,6 +17,12 @@ export default {
     },
   components: {
     TheNavbar,
+  },
+  methods: {
+      ...mapActions('freelanceStore', ['loadTasks'])
+  },
+  mounted() {
+    this.loadTasks()
   }
 }
 </script>

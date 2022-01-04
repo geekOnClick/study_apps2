@@ -16,13 +16,16 @@
       <textarea id="description" v-model="description"></textarea>
     </div>
 
-    <button class="btn primary" :disabled="!name&&!date&&!description" @click="addNewData('primary')">
+    <button class="btn primary" :disabled="!name&&!date&&!description" @click="addNewData">
       Создать </button>
   </form>
 </template>
 
 
 <script>
+import { mapActions } from 'vuex'
+import { nanoid } from 'nanoid'
+import { statuses } from '@/data/statuses.js'
 export default {
   data() {
       return {
@@ -33,20 +36,20 @@ export default {
     }
   },
   methods: {
-    addNewData(status) {
+    ...mapActions('freelanceStore', ['addTaskToDB']),
+    addNewData() {
       this.newData = {
+        id: nanoid(11),
         name: this.name,
         date: new Date(this.date).toLocaleDateString(),
         description: this.description,
-        status: status,
-        text: 'Создан'
+        status: statuses.added,
+        idDB: null
       }
-      this.$store.commit('freelanceStore/collectNewData', this.newData)
       if(new Date(this.date) < new Date()){
-        this.newData.status = "danger"
-        this.newData.text = 'Отменен'
-        this.$store.commit('freelanceStore/deductionActiveTasks')
+        this.newData.status = statuses.canceled
       }
+      this.addTaskToDB(this.newData)
       this.$router.push('/freelance')
     }
   }

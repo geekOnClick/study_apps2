@@ -3,17 +3,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 export default {
   props: ['status', 'text'],
-  data() {
-    return {
-
-    }
-  },
-  computed: {
-    ...mapGetters('freelanceStore', ['statusName'] )
-  }
 }
 </script>
 <style scoped>

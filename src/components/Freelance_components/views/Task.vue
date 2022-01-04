@@ -1,41 +1,54 @@
 <template>
   <div class="card">
     <h2>{{ $route.params.name }}</h2>
-    <p><strong>Статус</strong>: <AppStatus :status="$route.params.status" :text="$route.params.text"/></p>
+    <p><strong>Статус</strong>: <AppStatus :status="currentStatus" :text="currentText"/></p>
     <p><strong>Дэдлайн</strong>: {{ $route.params.date }}</p>
     <p><strong>Описание</strong>: {{ $route.params.description }}</p>
     <div>
-      <button class="btn warning" @click="changeStatus('warning', 'Взято в работу')">Взять в работу</button>
-      <button class="btn final" @click="changeStatus('final', 'Завершено')">Завершить</button>
-      <button class="btn danger" @click="changeStatus('danger', 'Отменено')">Отменить</button>
+      <button class="btn warning" @click="changeStatus({status: 'warning', id: $route.params.id, db: $route.params.db})">Взять в работу</button>
+      <button class="btn final" @click="changeStatus({status: 'final', id: $route.params.id, db: $route.params.db})">Завершить</button>
+      <button class="btn danger" @click="changeStatus({status: 'danger', id: $route.params.id, db: $route.params.db})">Отменить</button>
     </div>
   </div>
 </template>
 
 <script>
 import AppStatus from '../components/AppStatus'
-import { mapState } from 'vuex'
+import { statuses } from '@/data/statuses.js'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   components: {AppStatus},
   data() {
     return {
+      currentStatus: this.$route.params.status,
+      currentText: this.$route.params.text,
     }
   },
   computed: {
-      ...mapState('freelanceStore', ['tasksArr', 'activeTasks'] ),
+      ...mapGetters('freelanceStore', ['getTaskArr', 'getActiveTasks']),
     },
   methods: {
-    changeStatus(type, text){
-      if(type == 'final' || type == 'danger') {
-         this.$store.commit('freelanceStore/deductionActiveTasks')
+      ...mapMutations('freelanceStore', ['changeActiveTasks', 'changeTasksType']),
+      ...mapActions('freelanceStore', ['changeDBInfo']),
+
+    changeStatus(data){
+      console.log(data)
+      let newStatus = null;
+      switch(data.status){
+        case 'warning':
+          newStatus = statuses.inWork;
+          break;
+        case 'final':
+          newStatus = statuses.ended;
+          break;
+        case 'danger':
+          newStatus = statuses.canceled;
+          break
       }
-      else {
-        this.$store.commit('freelanceStore/addictionActiveTasks')
-      }
-      let task = this.tasksArr.find(elem => elem.id == this.$route.params.id)
-      task.status = type
-      task.text = text
-      this.$router.push('/freelance')
+      this.changeDBInfo(data)
+      this.currentStatus = newStatus.statusStyle
+      this.currentText = newStatus.statusText
+      this.changeActiveTasks(data.status);
     }
   }
 }
