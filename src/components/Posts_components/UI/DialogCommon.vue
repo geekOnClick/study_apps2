@@ -34,6 +34,7 @@ export default {
     background: rgba(0,0,0, 0.5 );
     position: fixed;
     display: flex;
+    z-index: 999;
 }
 .dialog__content {
     margin: auto;

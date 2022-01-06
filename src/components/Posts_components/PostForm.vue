@@ -1,12 +1,12 @@
 <template>
             <form @submit.prevent>
                 <h4>Создание поста</h4>
-                <input-common 
-                v-model="post.title"
+                <input class="input"
+                v-model="title"
                 type="text" 
                 placeholder="Название" />
-                <input-common 
-                v-model="post.body"
+                <input class="input"
+                v-model="body"
                 type="text" 
                 placeholder="Описание" />
 
@@ -18,25 +18,23 @@
 </template>
 
 <script>
-import InputCommon from './UI/InputCommon.vue'
+
 export default {
-  components: { InputCommon },   
     data(){
         return {
-           post: {
-               title: '',
-               body: ''
-           }
+            title: '',
+            body: '',
         }
     },
     methods: {
      createPost(){
-          this.post.id = Date.now(),
-          this.$emit('create', this.post),
-          this.post = {
-              title:'',
-              body:''
+        //   this.post.id = 'new Post'
+          let post = {
+              title: this.title,
+              body: this.body,
+              id: 'new Post'
           }
+          this.$emit('create', post)
       }
     },  
 }
@@ -54,6 +52,12 @@ form {
 }
 h4 {
     color: tomato;
+}
+.input {
+    width: 100%;
+    border: 1px solid teal;
+    padding: 10px 15px;
+    margin-top: 15px;
 }
 </style>>
 

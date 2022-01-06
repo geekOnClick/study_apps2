@@ -1,5 +1,5 @@
 <template>
-   <input @keyup.enter="checkInput" class="input" type="text">
+   <input @keyup.enter="checkInput" class="input" type="text" v-model="data" placeholder="Поиск по названию...">
 </template>
 
 <script>
@@ -23,9 +23,12 @@ export default {
 
 <style scoped>
 .input {
-    width: 100%;
+    width: 40%;
     border: 1px solid teal;
     padding: 10px 15px;
     margin-top: 15px;
+    box-shadow: 20px -15px 10px 5px rgba(0, 0, 0, .2);
+    border-radius: 5px;
+
 }
 </style>
